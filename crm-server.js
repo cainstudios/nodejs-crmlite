@@ -14,25 +14,25 @@ mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 	exports.server=http.createServer(function (req, res) {
 	//creates server
 		if (req.method=="POST"&&req.url=="/activities/create.json") {
-			//if method is POST and URL is messages/ add message to the array
-			var message='';
-			req.on('data', function(data, message){
+			//if method is POST and URL is activities/ add activity to the array
+			var activity='';
+			req.on('data', function(data, activity){
 				console.log(data.toString('utf-8'));
-				message=exports.addMessage(data.toString('utf-8'));
+				activity=exports.addActivity(data.toString('utf-8'));
 				//data is type of Buffer and must be converted to string with encoding UTF-8 first
-				//adds message to the array
+				//adds activity to the array
 			})
-			console.log(util.inspect(message, true, null));
-			console.log(util.inspect(messages, true, null));
+			console.log(util.inspect(activity, true, null));
+			console.log(util.inspect(activities, true, null));
 			//debugging output into the terminal
 			res.writeHead(200, {'Content-Type': 'text/plain'});
 			//sets the right header and status code		
-			res.end(message);
-			//out put message, should add object id
+			res.end(activity);
+			//out put activity, should add object id
 		}
 		if (req.method=="GET"&&req.url=="/activities/list.json") {
-		//if method is GET and URL is /messages output list of messages
-			var body=exports.getMessages();
+		//if method is GET and URL is /activities output list of activities
+			var body=exports.getActivities();
 			//body will hold our output
 			res.writeHead(200, {
 				'Content-Length': body.length,
@@ -65,7 +65,7 @@ exports.getActivities = function() {
 			activities=docs;
 		});
 	});	
-	return JSON.stringify(messages);
+	return JSON.stringify(activities);
 };
 
 exports.addActivity = function (data){
@@ -84,5 +84,5 @@ exports.addActivity = function (data){
 	});
 };
 
-var messages=exports.getActivities();
+var activities=exports.getActivities();
 exports.addActivity("originator=Tom Lee&contact=Sam Sur&company=HTA&notes=this was our first meeting&date=07/07/2012");
