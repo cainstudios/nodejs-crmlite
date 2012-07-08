@@ -8,7 +8,7 @@ var querystring = require('querystring');
 var mongo = require ('mongodb');
 var Server = mongo.Server;
 
-mongo.Db.connect(process.env.MONGOHQ_URL, function(error, client) {
+mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 	if (error) throw error;
 
 	exports.server=http.createServer(function (req, res) {
@@ -57,7 +57,7 @@ mongo.Db.connect(process.env.MONGOHQ_URL, function(error, client) {
 })
 
 exports.getActivities = function() {
-	mongo.Db.connect(process.env.MONGOHQ_URL, function(error, client) {
+	mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 		if (error) throw error;
 		var collection = new mongo.Collection(client, 'activity_collection');
 		collection.find({}, {limit:100}).toArray(function(err, docs) {
@@ -70,7 +70,7 @@ exports.getActivities = function() {
 
 exports.addActivity = function (data){
 	var str;
-	mongo.Db.connect(process.env.MONGOHQ_URL, function(error, client) {
+	mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 		if (error) throw error;
 		var collection = new mongo.Collection(client, 'activity_collection');
 		collection.insert(querystring.parse(data), {safe:true}, function(err, objects) {
