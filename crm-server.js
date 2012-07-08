@@ -11,7 +11,7 @@ var Server = mongo.Server;
 mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 	if (error) throw error;
 
-	exports.server=http.createServer(function (req, res) {
+	var app=http.createServer(function (req, res) {
 	//creates server
 		if (req.method=="POST"&&req.url=="/activities/create.json") {
 			//if method is POST and URL is activities/ add activity to the array
@@ -50,8 +50,8 @@ mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 	  //outputs string with line end symbol
 	});
 	
-	var port = process.env.PORT || 8000;
-	exports.server.listen(port, function() {
+	var port = process.env.PORT || 5191;
+	app.listen(port, function() {
 	  console.log("Listening on " + port);
 	});
 })
