@@ -50,7 +50,7 @@ mongo.Db.connect(process.env.MONGOHQ_URL_CRM, function(error, client) {
 	  //outputs string with line end symbol
 	});
 	
-	var port = process.env.PORT || 7000;
+	var port = process.env.PORT || 8000;
 	exports.server.listen(port, function() {
 	  console.log("Listening on " + port);
 	});
